@@ -1,6 +1,6 @@
 let currentUserId;
 let currentDiscriminator = null;
-let currentUserName;
+let currentUserNick;
 
 const deletedUser = 'Deleted User';
 let lastTopSenderId = null;
@@ -16,7 +16,7 @@ userNames['1'] = {
 
 function getUserNick(userId) { 
     if(userId && currentUserId && currentUserId == userId) {
-        return currentUserName;
+        return currentUserNick;
     }
     return userId in userNames ? userNames[userId].nick : deletedUser;
 }
@@ -54,7 +54,7 @@ function getUserIdFromNick(nick) {
 }
 function getCurrentDmFriends() {
     return {
-        currentUserId: { nick:  currentUserName },
+        currentUserId: { nick:  currentUserNick },
         currentDmId: { nick : getUserNick(currentDmId)}
     }
 }

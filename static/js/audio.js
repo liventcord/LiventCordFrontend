@@ -190,9 +190,9 @@ function stopAudioAnalysis() {
 
 
     const profileDisplayElement = document.getElementById('profile-display');
-    const selfProfileDisplayElement = document.getElementById('self-profile-image');
+
     
-    resetWiggleEffect(profileDisplayElement, selfProfileDisplayElement,selfProfileDisplayElementList);
+    resetWiggleEffect(profileDisplayElement, selfProfileImage,selfProfileDisplayElementList);
 }
 
 function startAudioAnalysis() {
@@ -249,7 +249,7 @@ function analyzeAudio(bufferSize, dataArray, recentVolumes) {
     const borderColor = `rgb(${Math.min(255, averageVolume * 2)}, 0, ${Math.max(0, 255 - averageVolume * 2)})`;
 
     const profileDisplayElement = document.getElementById('profile-display');
-    const selfProfileDisplayElement = document.getElementById('self-profile-image');
+
 
     if (averageVolume > dynamicThreshold) {
         if (profileDisplayElement) {
@@ -257,10 +257,10 @@ function analyzeAudio(bufferSize, dataArray, recentVolumes) {
             profileDisplayElement.style.transform = `scale(${scaleFactor})`;
             profileDisplayElement.style.borderColor = borderColor;
         }
-        if (selfProfileDisplayElement) {
-            selfProfileDisplayElement.classList.add('dancing-border');
-            selfProfileDisplayElement.style.transform = `scale(${scaleFactor})`;
-            selfProfileDisplayElement.style.borderColor = borderColor;
+        if (selfProfileImage) {
+            selfProfileImage.classList.add('dancing-border');
+            selfProfileImage.style.transform = `scale(${scaleFactor})`;
+            selfProfileImage.style.borderColor = borderColor;
         }
 
         const selfUserListProfileList = getSelfFromUserList()
@@ -270,22 +270,22 @@ function analyzeAudio(bufferSize, dataArray, recentVolumes) {
             selfUserListProfileList.style.borderColor = borderColor;
         }
     } else {
-        resetStyles(profileDisplayElement, selfProfileDisplayElement);
+        resetStyles(profileDisplayElement, selfProfileImage);
     }
 
     requestAnimationFrame(() => analyzeAudio(bufferSize, dataArray, recentVolumes));
 }
 
-function resetStyles(profileDisplayElement, selfProfileDisplayElement) {
+function resetStyles(profileDisplayElement, selfProfileImage) {
     if (profileDisplayElement) {
         profileDisplayElement.classList.remove('dancing-border');
         profileDisplayElement.style.transform = `scale(1)`;
         profileDisplayElement.style.borderColor = 'rgb(17, 18, 20)';
     }
-    if (selfProfileDisplayElement) {
-        selfProfileDisplayElement.classList.remove('dancing-border');
-        selfProfileDisplayElement.style.transform = `scale(1)`;
-        selfProfileDisplayElement.style.borderColor = 'rgb(17, 18, 20)';
+    if (selfProfileImage) {
+        selfProfileImage.classList.remove('dancing-border');
+        selfProfileImage.style.transform = `scale(1)`;
+        selfProfileImage.style.borderColor = 'rgb(17, 18, 20)';
     }
     const selfUserListProfileList = getSelfFromUserList();
     if(selfUserListProfileList) {
@@ -318,7 +318,6 @@ function stopCurrentMusic() {
 
 function resetProfileBorders() {
     const profileDisplayElement = document.getElementById('profile-display');
-    const selfProfileDisplayElement = document.getElementById('self-profile-image');
 
 
     const selfProfileDisplayElementList = getSelfFromUserList();
@@ -333,10 +332,10 @@ function resetProfileBorders() {
         profileDisplayElement.style.borderColor = '';
         profileDisplayElement.style.transform = '';
     }
-    if (selfProfileDisplayElement) {
-        selfProfileDisplayElement.style.borderRadius = '50%';
-        selfProfileDisplayElement.style.borderColor = '';
-        selfProfileDisplayElement.style.transform = '';
+    if (selfProfileImage) {
+        selfProfileImage.style.borderRadius = '50%';
+        selfProfileImage.style.borderColor = '';
+        selfProfileImage.style.transform = '';
     }
 }
 

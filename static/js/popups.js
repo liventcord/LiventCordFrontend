@@ -374,7 +374,7 @@ function changePopUpToGuildCreation(newPopParent, popButtonContainer, newPopCont
     newPopSubject.textContent = 'Sunucunu Özelleştir';
     newPopContent.textContent = 'Yeni sunucuna bir isim ve simge ekleyerek ona kişilik kat. Bunları istediğin zaman değiştirebilirsin.';
 
-    const text = currentUserName + ' Kullanıcısının sunucusu';
+    const text = currentUserNick + ' Kullanıcısının sunucusu';
     const newInput = createEl('input', { value: text, id: 'guild-name-input' });
     const createButton = createEl('button', { textContent: 'Oluştur', className: 'create-guild-verify common-button' });
     const backButton = createEl('button', { textContent: 'Geri', className: 'create-guild-back common-button' });

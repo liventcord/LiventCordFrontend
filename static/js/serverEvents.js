@@ -246,7 +246,7 @@ socket.on('update_nick',data => {
         if(settingsNameText) {
             settingsNameText.innerText = newNickname;
         }
-        currentUserName = newNickname;
+        currentUserNick = newNickname;
         return;
     }
     

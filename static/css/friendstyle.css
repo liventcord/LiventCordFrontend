@@ -267,9 +267,9 @@
 
 #friend-menu-buttons {
     display: flex;
-    flex-wrap: nowrap; /* Prevents wrapping to a new line */
+    flex-wrap: nowrap;  
     margin-left: 15px;
-    align-items: center; /* Aligns items vertically centered */
+    align-items: center;  
 }
 
 
@@ -421,7 +421,7 @@
 .friend-card:hover .friend-discriminator {
     background-color: #393c41; 
 }
-/* Add white line between friend cards */
+ 
 .friend-card:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -432,7 +432,7 @@
     background-color: #ffffff18;
 }
   
-/* Add white line before the first friend card */
+ 
 #friends-container .friend-card:first-child::before {
     content: "";
     position: absolute;
@@ -527,15 +527,15 @@
     color: white;
 }
 .friend-container #friendiconsvg {
-    fill: #949ba4 !important; /* Default fill color */
+    fill: #949ba4 !important;  
 }
 
 .friend-container:hover #friendiconsvg {
-    fill: white !important; /* Hover state fill color */
+    fill: white !important;  
 }
 
 .friend-container.dm-selected #friendiconsvg {
-    fill: white !important; /* Selected state fill color */
+    fill: white !important;  
 }
 
 
@@ -609,7 +609,7 @@
 }
 
 .online {
-    background-color: #23a55a; /* Green color for online users */
+    background-color: #23a55a;  
 }
 
 .offline {

@@ -274,7 +274,7 @@ function updateUsersStatus(friend) {
     const avatarImg = createEl('img', { className: 'activity-card-avatar' });
     setProfilePic(avatarImg, friend.userId);
     const nickHeading = createEl('h2', { className: 'activity-card-nick' });
-    nickHeading.textContent = friend.name || getUserNick(friend.userId);
+    nickHeading.textContent = friend.nickName || getUserNick(friend.userId);
     const titleSpan = createEl('span', { className: 'activity-card-title' });
     titleSpan.textContent = friend.activity || '';
     contentDiv.appendChild(avatarImg);
@@ -394,7 +394,7 @@ function createDmBubble(isOnline) {
 
 function populateFriendsContainer(friends, isPending) {
     friends.forEach(user => {
-        addUser(user.userId, user.name, user.discriminator);
+        addUser(user.userId, user.nickName, user.discriminator);
     });
     if (isPopulating || !currentSelectedStatus) {  return;  }
     isPopulating = true;

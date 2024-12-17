@@ -187,7 +187,7 @@ function updateDmFriendList(friend_id,friendNick,friendDiscriminator) {
     const usersData = {
         currentUserId: {
             userId:  currentUserId,
-            name: currentUserName,
+            name: currentUserNick,
             is_online : true ,
             discriminator: currentDiscriminator
         },

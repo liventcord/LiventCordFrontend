@@ -86,7 +86,7 @@ th {
 
 .context-menu ul li:hover > ul {
     display: block;
-    max-width: 300px; /* Adjust as needed */
+    max-width: 300px;
 }
 
 
@@ -292,7 +292,6 @@ th {
 
 }
 
-/* Style for buttons */
 .settings-menu-button {
     display: block;
     font-size: 20px;
@@ -340,252 +339,7 @@ th {
 
 
 
-#settings-unsaved-popup {
-    display: none;
-    white-space: nowrap;
-    font-size: 17px;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    width: 455px;
-    z-index: 50;
 
-    padding: 15px 100px;
-    border: none;
-    border-radius: 5px;
-
-    background-color: #0f0f0f;
-    color: #fff;
-
-    animation: slide-up 0.5s ease-in-out forwards;
-}
-
-#settings-unsaved-popup.slide-out {
-    animation: slide-down 0.5s ease-in-out forwards;
-}
-
-@keyframes slide-up {
-    from {
-        transform: translate(-50%, 100%);
-    }
-    to {
-        transform: translate(-50%, 0);
-    }
-}
-
-@keyframes slide-down {
-    from {
-        transform: translate(-50%, 0);
-    }
-    to {
-        transform: translate(-50%, 300%);
-    }
-}
-.pop-button-container {
-    bottom: 0;
-    width: 100%;
-    height: 38%;
-    position: fixed; /* Fixed position to stay at the bottom of the viewport */
-    background-color: #2b2d31;
-    z-index: 2; /* Ensure it stays above other elements */
-}
-
-.pop-up {
-
-    position: fixed; /* Fixed position to stay in place */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the pop-up horizontally and vertically */
-    background-color: #2f3136;
-    border-radius: 10px;
-    animation: pop-up-animation 0.3s forwards;
-    overflow: hidden; /* Hide any overflow */
-    display: flex;
-    flex-direction: column; /* Arrange children vertically */
-}
-
-
-
-.pop-up-content::-webkit-scrollbar {
-    width: 5px;
-}
-
-.pop-up-content::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.pop-up-content::-webkit-scrollbar-thumb {
-    background-color: rgb(26, 27, 30); 
-    border-radius: 10px; 
-    border: transparent;
-}
-
-#guild-pop-up {
-    animation: guild-pop-up-animation 0.3s forwards; 
-    display: flex;
-    justify-content: center;
-    text-align: center; 
-}
-
-
-
-
-@keyframes guild-pop-up-animation {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 440px;
-        height: 560px;
-    }
-
-}
-@keyframes guild-pop-up-create-guild-animation {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 440px;
-        height: 360px;
-    }
-
-}
-@keyframes guild-pop-up-join-guild-animation {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 440px;
-        height: 425px;
-    }
-
-}
-@keyframes pop-up-animation {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 440px;
-        height: 205px;
-    }
-}
-@keyframes pop-up-animation-profile {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 600px;
-        height: 780px;
-    }
-}
-@keyframes pop-up-animation-invite {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 440px;
-        height: 455px;
-    }
-}
-
-@keyframes pop-up-animation-channel {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 460px;
-        height: 505px;
-    }
-}
-@keyframes pop-up-shrink-animation {
-    0% {
-        width: 440px;
-        height: 205px;
-    }
-    100% {
-        width: 0;
-        height: 0;
-        padding: 0;
-        margin: 0;
-    }
-}
-
-
-
-
-.pop-up-content {
-    color: white;
-    overflow-y: scroll;
-    max-height: calc(100% - 38px); 
-    padding: 50px;
-    margin-bottom: 38px; /
-}
-
-.pop-up-subject {
-    font-size: 24px;
-    z-index: 3;
-    left: 20px;
-    top: -10px;
-    font-weight: bold;
-    width: 90%;
-    color: white;
-    white-space: pre-wrap;
-    overflow: hidden; 
-    position: fixed;
-    text-align: center; 
-}
-
-.pop-up-accept.inactive {
-    background-color: #3b428a;
-    color: #8a8b90;
-    cursor: auto;
-}
-.pop-up-accept.active {
-    background-color: #5865f2;
-    cursor: pointer;
-}
-.pop-up-accept {
-    font-size: 18px;
-    width: 40%; height: 23%;
-    background-color: #5865f2;
-    
-    color: wheat;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position:fixed;
-    z-index: 1;
-    top: 80%;   left: 75%;
-    transition: background-color 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-#special-channel-icon {
-    position: absolute;
-    bottom: 120px;
-    left: 18px;
-    z-index: 1;
-}
-.pop-up-refuse {
-    font-size: 18px;
-    width: 20%; height: 23%;
-    background-color: transparent;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position:fixed;
-    z-index: 1;    top: 80%;   left: 45%;
-    transition: background-color 0.3s ease;
-    transform: translate(-50%, -50%);
-}
 
 #guild-name-input {
     padding: 10px;
@@ -598,23 +352,7 @@ th {
     height: 5%;
     
 }
-.common-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    color: white;
-    font-weight: 200;
-    border: none;
-    position: fixed;
-    bottom: 10px;
-    width: 100px;
-    font-size: 16px;
-    height: 10%;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 
 .create-guild-verify {
@@ -635,152 +373,7 @@ th {
     font-weight: bold;
     font-size: 14px;
 }
-.popup-close {
-    color:gray;
-    top: 0px;
-    right: 0px; left: auto;
-    width: 50px; height: 50px;
-    font-size: 22px;
-    border: none;
-    background-color: transparent;
-    position: fixed;
-    cursor: pointer;
-    transform: scaleX(1.4);
-}
-.popup-close:hover {
-    color:lightgray;
-}
-.pop-up-accept:hover {
-    background-color: #4750bb;
-}
 
-
-.guild-pop-button-container {
-    bottom: 0%;
-    width: 100%;
-    height: 18.5%;
-
-    position: fixed;
-    background-color: #2b2d31;
-    display: flex;
-    justify-content: center;
-    text-align: center; 
-}
-#inviteUsersPopContainer {
-    bottom: 0px;
-    width: 100%;
-    height: 38%;
-    position: fixed;
-    background-color: #313338;
-}
-#inviteUsersPopContainer {
-    animation: pop-up-animation-invite 0.3s forwards; 
-}
-#profilePopContainer {
-    bottom: 0px;
-    width: 100%;
-    height: 38%;
-    position: fixed;
-    background-color: rgb(17, 18, 20 );
-    animation: pop-up-animation-profile 0.3s forwards; 
-}
-#createChannelPopContainer {
-    bottom: 0px;
-    width: 100%;
-    height: 38%;
-    position: fixed;
-    background-color: #313338;
-}
-#createChannelPopContainer {
-    animation: pop-up-animation-channel 0.3s forwards; 
-    
-}
-.guild-pop-up-subject {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    position:fixed;
-    top: 5%; left: 50%;
-    white-space: nowrap;
-    transform: translate(-50%, -50%);
-}
-.guild-pop-up-content {
-    width: 400px;
-    text-align: center;
-    
-    font-size: 16px;
-    color: #c2bebe;
-    position:fixed;
-
-    top: 15%; left: 50%;
-
-    transform: translate(-50%, -50%);
-}
-#guild-popup-option2-title {
-    color: white;
-    margin-top: 0px;
-    margin-left: 0px;
-    z-index: 1;
-    font-size: 20px;
-
-
-}
-
-.guild-pop-up-accept {
-    font-size: 18px;
-    width: 93%; height: 13%;
-    background-color:#4e5058;
-
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position:fixed;
-    top: 80%;   left: 50%;
-    transition: background-color 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-
-.popup-bottom-container {
-    font-size: 18px;
-    width: 93%; height: 8%;
-    background-color:#2b2d31;;
-
-    color: white;
-    border: none;
-    border-radius: 10px;
-    position:fixed;
-    top: 90%;   left: 50%;
-    transition: background-color 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-#invite-popup-bottom-container {
-    height: 24.5%;
-    top: 87.5%;
-    width: 100%;
-
-}
-#profile-popup-bottom-container {
-    height: 53%;
-    top: 71.5%;
-    width: 94.5%;
-    border-radius: 10px;
-    background-color: rgb(35 37 40    );
-}
-#profile-popup-top-container {
-    height: 27%;
-    top: 13.4%;
-    display: flex;
-    border-radius: 15px 15px 0 0;
-    align-items: right;
-    justify-content: right;
-    width: 100%;
-}
-#create-channel-popup-bottom-container {
-    height: 14%;
-    top: 93%;
-    width: 100%;
-}
 #invite-users-title {
     color: white;
     font-size: 16px;
@@ -918,7 +511,7 @@ th {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* or row if you want them side by side */
+    flex-direction: column; 
 }
 
 #create-channel-text-type, #create-channel-voice-type {
@@ -938,60 +531,7 @@ th {
     transform: translate(-50%,-50%);
 }
 
-#popOptionButton{
 
-    border: 1px solid gray;
-    top: 40%;
-    background-color: transparent;
-}
-#popOptionButton2 {
-    width: 100%;
-    font-size: 14px;
-    height: 83%;
-    top: 44px;
-    transition: filter 0.2s ease; 
-    filter: brightness(100%);
-}
-#popOptionButton2:hover {
-    filter: brightness(140%);
-}
-
-#settings-unsaved-popup-text {
-    margin-left: -85px;
-}
-
-#settings-unsaved-popup-resetbutton {
-    position: absolute;
-    right: 180px;
-    text-decoration: none; 
-    top: 15px;
-    cursor: pointer;
-}
-
-#settings-unsaved-popup-resetbutton:hover {
-    text-decoration: underline;
-}
-
-#settings-unsaved-popup-applybutton {
-    color: #fff;
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    border:none;
-
-    cursor: pointer;
-    
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 10px 10px;
-
-   
-    background-color: #23a55a;
-    
-}
-#settings-unsaved-popup-applybutton:hover {
-    background-color: #14773d;
-}
 #settings-menu button:hover {
     background-color: #677bc4;
 }
@@ -1141,8 +681,6 @@ th {
 
 
 
-
-/* Style for file input and label */
 .file-upload-input {
     display: none;
 }
@@ -1274,15 +812,15 @@ th {
     height: 30px;
     margin: 5px;
     margin-top: 53px;
-    transition: background-color 0.3s; /* Optional for smooth transition */
+    transition: background-color 0.3s; 
 }
 
 .sound-panel-button:hover {
-    background-color: #444; /* Change this to your desired hover color */
+    background-color: #444; 
 }
 
 .sound-panel-button svg {
-    pointer-events: none; /* Ensures the SVG doesn't block hover events */
+    pointer-events: none; 
 }
 
 
@@ -1325,7 +863,7 @@ th {
     background-color: #ffffff00;
     cursor: pointer;
     border: none;
-    outline: none; /* Add this line to remove the focus outline */
+    outline: none; 
 }
 
 
@@ -1338,12 +876,10 @@ th {
     }
 }
 
-/* Apply the rotation animation on hover */
 #settings-button:hover svg {
     animation: rotate360 1s linear;
 }
 
-/* Reset the rotation when not hovered */
 #settings-button:not(:hover) svg {
     animation: none;
 }
@@ -1455,7 +991,7 @@ th {
     background-color: #232428; 
     left: 55px;
     width: 257px;
-    overflow: hidden; /* Ensure overflow is hidden for ellipsis to work */
+    overflow: hidden; 
 }
 
 
@@ -1529,29 +1065,28 @@ th {
     left: 50%;
     top: 50%;
     z-index: 501;
-    transform: translate(-50%, -50%) rotate(0deg); /* Start from no rotation */
-    animation: rotateAnimation var(--rotation-speed) linear infinite; /* Animation for rotation */
+    transform: translate(-50%, -50%) rotate(0deg); 
+    animation: rotateAnimation var(--rotation-speed) linear infinite; 
 }
 
 @keyframes rotateAnimation {
     0% {
-        transform: translate(-50%, -50%) rotate(0deg); /* Start from no rotation */
+        transform: translate(-50%, -50%) rotate(0deg);
     }
     50% {
-        transform: translate(-50%, -50%) rotate(360deg); /* Rotate to 360 degrees halfway through */
+        transform: translate(-50%, -50%) rotate(360deg);
     }
     100% {
-        transform: translate(-50%, -50%) rotate(360deg); /* Rotate back to original position */
+        transform: translate(-50%, -50%) rotate(360deg); 
     }
 }
 
-/* Delay animation after each rotation */
 @keyframes delayAnimation {
     0%, 50% {
-        opacity: 0; /* Start and halfway through, element is hidden */
+        opacity: 0;
     }
     51%, 100% {
-        opacity: 1; /* Show element after delay */
+        opacity: 1; 
     }
 }
 
@@ -1741,46 +1276,9 @@ th {
 }
 
 
-#image-to-crop {
-    width: 100% !important;
-    height: auto !important;
-}
-.pop-up-append {
-    font-size: 16px;
-    width: 20%; height: 5%;
-    background-color: #5865f2;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position:fixed;
-    z-index: 1;
-    top: 95%;   left: 85%;
-    transition: background-color 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-#image-container {
-    width: 100%;
-    height: auto;
-}
-#cropPopContainer {
-    overflow: visible;
-}
-.cr-slider::-webkit-slider-thumb {
-    -webkit-appearance: none !important; /* Remove default appearance */
-    width: 10px !important; /* Width of the handle */
-    height: 20px !important; /* Height of the handle */
-    cursor: pointer !important; /* Cursor style when hovering over the handle */
-    border-radius: 0 !important; /* Remove rounding to make the handle square */
-}
 
-/* Styling for Firefox */
-.cr-slider::-moz-range-thumb {
-    width: 10px !important; /* Width of the handle */
-    height: 20px !important; /* Height of the handle */
-    cursor: pointer !important; /* Cursor style when hovering over the handle */
-    border-radius: 0 !important; /* Remove rounding to make the handle square */
-}
+
+
 
 #settings-rightcontainer {
     font-size: 20px;
@@ -1795,11 +1293,11 @@ th {
 }
 .toggle-card {
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap onto multiple lines */
+    flex-wrap: wrap;
     padding: 10px;
     align-items: center;
-    justify-content: space-between; /* Space between items */
-    position: relative; /* Needed for positioning the last child */
+    justify-content: space-between;
+    position: relative; 
 }
 
 .toggle-card label:nth-child(1) { 
@@ -1820,7 +1318,7 @@ th {
     border-radius: 14px;
     background-color: rgb(128, 132, 142);
     position: absolute; 
-    right: 10px; /* Adjust as needed for spacing from the right edge */
+    right: 10px; 
     bottom: 10px; 
     transition: background-color 0.3s;
     cursor: pointer;
@@ -1894,3 +1392,33 @@ th {
     color: rgb(181, 186, 193 );
 }
 
+
+
+/*crop */
+
+#image-to-crop {
+    width: 100% !important;
+    height: auto !important;
+}
+
+#image-container {
+    width: 100%;
+    height: auto;
+}
+#cropPopContainer {
+    overflow: visible;
+}
+.cr-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important; 
+    width: 10px !important; 
+    height: 20px !important;
+    cursor: pointer !important; 
+    border-radius: 0 !important; 
+}
+
+.cr-slider::-moz-range-thumb {
+    width: 10px !important; 
+    height: 20px !important; 
+    cursor: pointer !important; 
+    border-radius: 0 !important; 
+}

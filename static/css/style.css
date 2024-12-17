@@ -127,7 +127,7 @@
     margin-left: 10px;          
     margin-top: 0;             
     overflow: hidden;          
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;  
 }
 .profile-after-profile {
     margin-top: 10px !important;
@@ -137,10 +137,10 @@
     font-size: 32px;
     
     margin-top: 60px;
-    margin-left: -70px; /* Adjusted margin for better alignment */
-    word-wrap: break-word; /* Allow breaking long words */
-    overflow-wrap: break-word; /* Allow breaking long words */
-    max-width: calc(100% - 88px); /* Adjust to prevent overflow */
+    margin-left: -70px;  
+    word-wrap: break-word;  
+    overflow-wrap: break-word;  
+    max-width: calc(100% - 88px);  
 }
 
 #msgDescription {
@@ -265,7 +265,7 @@
 }
 
 #gifs-menu-container::-webkit-scrollbar-track {
-    background: transparent; /* Track color */
+    background: transparent;  
 }
 
 #gifs-menu-container::-webkit-scrollbar-thumb {
@@ -336,7 +336,7 @@
 }
 
 #user-list ~ #target-div {
-    /* Apply your styles here when #user-list is display: none */
+     
     background-color: yellow;
 }
 
@@ -389,9 +389,9 @@
     color: #313338;
 
 
-    text-align: center; /* Horizontally center the text */
+    text-align: center;  
     display: flex;
-    justify-content: center; /* Vertically center the text */
+    justify-content: center;  
     align-items: center;
 }
 #scroll-to-bottom {
@@ -442,7 +442,7 @@
 
 
 
-/* Webkit (Chromium) */
+ 
 #chat-container::-webkit-scrollbar,
 #channel-list::-webkit-scrollbar,
 #user-list::-webkit-scrollbar {
@@ -469,7 +469,7 @@
 }
 
 
-/* Firefox */
+ 
 @supports (-moz-appearance: none) {
  
     #chat-container {
@@ -563,7 +563,7 @@
 }
 .searchInput {
     border: none;
-    width: 144px; /* This is the width of the input */
+    width: 144px;  
     height: 22px;
     text-indent: 5px;
     color: oklab(0.686679 -0.00398019 -0.0150182);
@@ -783,7 +783,7 @@
     padding-top: 50px;
     top: 60px;
     box-sizing: border-box; 
-    animation-duration: 0.3s; /* Set animation duration */
+    animation-duration: 0.3s;  
 }
 
 @keyframes fadeIn {
@@ -1007,9 +1007,9 @@
     padding-top: 65px;
     max-height: 90vh;
     background-color: #313338;
-    width: 238px; /* Fixed width */
-    display: flex; /* Ensure it uses flexbox */
-    flex-direction: column; /* Column direction */
+    width: 238px;  
+    display: flex;  
+    flex-direction: column;  
     z-index: 0;
 }
 
@@ -1072,7 +1072,7 @@
 
 
 #json-preview-container {
-    position: fixed; /* Use fixed position to cover the entire viewport */
+    position: fixed;  
     z-index: 10;
     top: 0;
     left: 0;
@@ -1082,18 +1082,18 @@
     justify-content: center;
     align-items: center; 
     background-color: #0505056b;
-    padding: 20px; /* Optional padding */
+    padding: 20px;  
 }
 
 #json-preview-element {
-    position: relative; /* Ensure the child has a position other than static */
-    z-index: 15; /* Higher z-index for the child element */
+    position: relative;  
+    z-index: 15;  
     user-select: text;
     padding: 30px;
     color: white;
-    max-width: 50%; /* Maximum width 50% of viewport width */
-    max-height: 60%; /* Maximum height 60% of viewport height */
-    overflow: auto; /* Enable scrolling if content exceeds dimensions */
+    max-width: 50%;  
+    max-height: 60%;  
+    overflow: auto;  
 }
 #json-preview-element::-webkit-scrollbar {
     width: 6px; 
@@ -1151,7 +1151,6 @@
 }
 
 
-/* Style for text input */
 #new-nickname {
     width: 100%;
     margin-bottom: 10px;
@@ -1164,7 +1163,6 @@
 
 
 
-/* Style for file input */
 input[type="file"] {
     display: none;
     position: relative;
@@ -1284,14 +1282,14 @@ textarea::-webkit-scrollbar-track {
 
 
 #message-content-element {
-    word-break: break-word; /* Break long words if necessary */
+    word-break: break-word; 
     max-width: 90%; 
-    margin-left: 60px; /* Add margin on the left */
+    margin-left: 60px;
     z-index: 1;
     margin-top: 10px;
     user-select: text;
-    white-space: pre-wrap; /* Preserve whitespace and line breaks, but wrap text */
-    overflow-wrap: break-word; /* Ensure long words are broken if necessary */
+    white-space: pre-wrap; 
+    overflow-wrap: break-word;
 }
 
 
@@ -1597,15 +1595,15 @@ textarea::-webkit-scrollbar-track {
 
 
 .modal {
-    display: flex; /* Center the content */
+    display: flex; 
     justify-content: center;
     align-items: center;
-    position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    position: fixed;
+    z-index: 10;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    width: 100%;
+    height: 100%; 
 }
 
 
@@ -1673,6 +1671,7 @@ textarea::-webkit-scrollbar-track {
 
 #audio-parent {
     position: fixed;
+    display: none;
     z-index: 1;
     left: 82px;
     bottom:90px;
@@ -1754,14 +1753,14 @@ textarea::-webkit-scrollbar-track {
     background: #161616;
     display: flex;
     flex-direction: column;
-    position: relative; /* Establish positioning context */
+    position: relative; 
 }
 
 .track {
-    height: 6px; /* Set a fixed height for the track */
+    height: 6px; 
     cursor: pointer;
-    position: relative; /* Ensure track can have pseudo-elements */
-    background: transparent; /* Make the background transparent to show track before and after */
+    position: relative; 
+    background: transparent; 
 }
 
 .track::before {
@@ -1773,18 +1772,18 @@ textarea::-webkit-scrollbar-track {
     opacity: 0.3;
     border-radius: 10px;
     position: absolute;
-    top: 0; /* Align the track before to the top */
+    top: 0; 
 }
 
 .track::after { 
     content: '';
     height: 6px;
-    width: 85%; /* This should be dynamically updated */
+    width: 85%;  
     display: block;
     background: #D9D9D9;
     border-radius: 10px;
     position: absolute;
-    top: 0; /* Align the track after to the top */
+    top: 0;  
 }
 
 .time {
@@ -1793,12 +1792,12 @@ textarea::-webkit-scrollbar-track {
     color: gainsboro;
     display: flex;
     justify-content: space-between;
-    padding-top: 5px; /* Adjusted for spacing */
-    position: absolute; /* Change to absolute */
-    top: 10px; /* Adjust the position as needed */
-    left: 0; /* Align to left */
-    right: 0; /* Align to right */
-    z-index: 2; /* Ensure time is above the track */
+    padding-top: 5px;  
+    position: absolute;  
+    top: 10px;  
+    left: 0;  
+    right: 0;  
+    z-index: 2;  
 }
 
 @media (max-width: 670px) {

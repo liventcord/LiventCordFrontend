@@ -57,7 +57,11 @@ function assignElements() {
 
 
 
+function setSelfProperties(nick,discriminator) {
+    getId('self-name').textContent = nick;
+    getId('self-discriminator').textContent = '#'+discriminator;
 
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     window.scrollTo(0,0)
@@ -111,11 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     isDomLoaded = true;
     currentUserId = passed_user_id;
-    currentUserName = nick_name;
+    currentUserNick = nick_name;
     currentDiscriminator = user_discriminator;
 
-    getId('self-name').textContent = nick_name;
-    getId('self-discriminator').textContent = '#'+user_discriminator;
+    setSelfProperties(nick_name,user_discriminator)
     
     
     getId('tb-showprofile').addEventListener('click', toggleUsersList);

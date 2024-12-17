@@ -158,7 +158,7 @@ function changeNickname() {
     const newNicknameInput = getId('new-nickname-input');
     const newNickname = newNicknameInput.value.trim();
 
-    if (newNickname !== '' && !changeNicknameTimeout && newNickname != currentUserName) {
+    if (newNickname !== '' && !changeNicknameTimeout && newNickname != currentUserNick) {
 
         console.log("Changed your nickname to: " + newNickname);
         userNick = newNickname;

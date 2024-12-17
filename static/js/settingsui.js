@@ -75,20 +75,20 @@ function getAccountSettingsHtml() {
     <div id="settings-rightbar">
         <div id="settings-light-rightbar">
             <div id="set-info-title-nick">KULLANICI ADI</div>
-            <div id="set-info-nick">${currentUserName}</div>
+            <div id="set-info-nick">${currentUserNick}</div>
             <div id="set-info-title-email">E POSTA</div>
             <i id="set-info-email-eye" style="cursor:pointer;" class="fas fa-eye toggle-password" onclick="toggleEmail()"> </i>
             <div id="set-info-email">${masked_email}</div>
 
         </div>
         
-        <input type="text" id="new-nickname-input" autocomplete="off" value="${currentUserName}" onkeydown="onEditNick()" maxlength="32">
+        <input type="text" id="new-nickname-input" autocomplete="off" value="${currentUserNick}" onkeydown="onEditNick()" maxlength="32">
         <img id="settings-self-profile" src="/profiles/${currentUserId}" onclick="triggerFileInput()" style="user-select: none;">
         <div class="bubble" style="margin-left:90px; top:35px;"></div>
         <form id="profileImageForm" enctype="multipart/form-data">
             <input type="file" name="profileImage" id="profileImage" accept="image/*" style="display: none;">
         </form>
-        <span id="settings-self-name">${currentUserName}</span>
+        <span id="settings-self-name">${currentUserNick}</span>
     </div>
     `
 }
@@ -226,7 +226,7 @@ function selectSettingCategory(settingtype) {
             newHTML = getAccountSettingsHtml();
             callback = () => {
                 getId('profileImage').addEventListener('change', onEditProfile);
-                updateSelfProfile(currentUserId, currentUserName); 
+                updateSelfProfile(currentUserId, currentUserNick); 
             }
             let rightbar = getId('settings-rightbar');
             if(!rightbar) {
@@ -438,7 +438,7 @@ function generateConfirmationPanel() {
         hideConfirmationPanel(popupDiv);
         const nickinput = getId('new-nickname-input')
         if(nickinput) {
-            nickinput.value = currentUserName;
+            nickinput.value = currentUserNick;
         }
         const profileimg = getId('profileImage');
         if(profileimg) {
