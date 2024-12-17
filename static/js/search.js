@@ -16,7 +16,7 @@ function updateUserMentionDropdown(value) {
 
             if (filteredUsers.length) {
                 userMentionDropdown.innerHTML = filteredUsers.map(user => `
-                    <div class="mention-option" data-userid="${user.user_id}" onclick="selectUser('${user.user_id}', '${user.name}')">
+                    <div class="mention-option" data-userid="${user.userId}" onclick="selectUser('${user.userId}', '${user.name}')">
                         ${user.name}
                     </div>
                 `).join('');

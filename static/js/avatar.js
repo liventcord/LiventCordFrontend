@@ -37,7 +37,7 @@ function uploadImage(isGuild) {
                         updateGuild(uploadedGuildId);
                         lastConfirmedGuildImg = file;
                     } else {
-                        updateSelfProfile(currentUserId,user_name,true);
+                        updateSelfProfile(currentUserId,nickname,true);
                         lastConfirmedProfileImg = file;
                     }
                 } else {

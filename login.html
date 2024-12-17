@@ -17,27 +17,26 @@
             position: fixed;
             top: 100px;
             margin-left: -300px;
-            left: -600px; /* Start off-screen to the left */
-            animation: moveAndFade 4s ease forwards; /* Use a keyframe animation */
+            left: -600px; 
+            animation: moveAndFade 4s ease forwards;
         }
         
-        /* Keyframes for the move and fade animation */
         @keyframes moveAndFade {
             0% {
-                left: -600px; /* Start off-screen to the left */
-                opacity: 1; /* Start fully opaque */
+                left: -600px; 
+                opacity: 1;
             }
             30% {
-                left: 50%; /* Move to the middle */
-                opacity: 1; /* Maintain opacity while moving */
+                left: 50%;
+                opacity: 1;
             }
             50% {
-                left: 50%; /* Pause at the middle for 2 seconds */
-                opacity: 1; /* Maintain opacity */
+                left: 50%;
+                opacity: 1;
             }
             100% {
-                left: 100%; /* Move off-screen to the right */
-                opacity: 0; /* Fade out to transparent */
+                left: 100%;
+                opacity: 0;
             }
         }
         

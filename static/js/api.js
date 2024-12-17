@@ -99,10 +99,10 @@ class CustomHttpConnection {
                 url = `${basePath}/guilds/${data.guildId}/channels/${data.channelId}/typing`;
                 break;
             case EventType.ADD_FRIEND:
-                url = `${basePath}/friends`;
+                url = `${basePath}/friends?name=${data.friendName}&discriminator=${friendDiscriminator}`;
                 break;
             case EventType.ADD_FRIEND_ID:
-                url = `${basePath}/guilds/${data.guildId}/channels/${data.channelId}/typing`;
+                url = `${basePath}/friends?id=${data.friendId}`;
                 break;
             default:
                 throw new Error(`Unknown event: ${event}`);

@@ -100,7 +100,7 @@ socket.on('old_messages_response', function(data) {
 
 
 socket.on('update_user_profile', data => {
-    refreshUserProfileImage(data.user_id);
+    refreshUserProfileImage(data.userId);
 });
 
 
@@ -116,14 +116,14 @@ socket.on('create_channel_response', data => {
 socket.on('bulk_reply_response', data => {
     const replies = data.bulk_replies;
     replies.forEach(reply => {
-        const { messageId, user_id, content, attachment_urls } = reply;
+        const { messageId, userId, content, attachment_urls } = reply;
         if (!replyCache[messageId]) {
             replyCache[messageId] = {
                 messageId: messageId,
                 replies: []
             };
         }
-        replyCache[messageId].replies.push({ user_id, content, attachment_urls });
+        replyCache[messageId].replies.push({ userId, content, attachment_urls });
     });
     setTimeout(() => {
         handleReplies();
@@ -184,19 +184,19 @@ socket.on('get_members', data => {
 
 
 socket.on('user_status', (data) => {
-    const user_id = data.user_id;
+    const userId = data.userId;
     const is_online = data.is_online;
-    updateUserOnlineStatus(user_id, is_online)
+    updateUserOnlineStatus(userId, is_online)
 });
 
 socket.on('message', (data) => {
     try {
-        const { isDm, messageId, user_id, content, channelId, date, attachment_urls, reply_to_id,is_bot, guildId, last_edited, reaction_emojis_ids} = data;
+        const { isDm, messageId, userId, content, channelId, date, attachment_urls, reply_to_id,is_bot, guildId, last_edited, reaction_emojis_ids} = data;
         const idToCompare = isDm ? currentDmId : currentChannelId;
         
         if (data.guildId != currentGuildId || idToCompare != channelId) {
             console.log(`${idToCompare} is not ${channelId} so returning`);
-            if (user_id !== currentUserId) {
+            if (userId !== currentUserId) {
                 playNotification();
                 setActiveIcon();
             }
@@ -231,8 +231,8 @@ socket.on('get_history', (data) => {
 
 
 socket.on('update_nick',data => {
-    const userid = data.user_id;
-    const newNickname = data.user_name;
+    const userid = data.userId;
+    const newNickname = data.userName;
     if(userid == currentUserId) {
         
         const settingsNameText = getId('settings-self-name');
@@ -259,34 +259,48 @@ socket.on('users_data_response', data => {
     updateFriendsList(data.users,data.isPending);  
 });
 
-socket.on('friend_request_response', (data) => {
-    handleFriendEventResponse(data.message);
+//friend
+socket.on('add_friend', function (message) {
+    handleFriendEventResponse(message);
 });
+
+socket.on('accept_friend_request', function (message) {
+    handleFriendEventResponse(message);
+});
+
+socket.on('remove_friend', function (message) {
+    handleFriendEventResponse(message);
+});
+
+socket.on('deny_friend_request', function (message) {
+    handleFriendEventResponse(message);
+});
+
 
 //audio
 
 socket.on('voice_users_response',function(data) {
-    const channel_id = data.channel_id;
+    const channelId = data.channelId;
     playAudio('/static/sounds/joinvoice.mp3');
     clearVoiceChannel(currentVoiceChannelId);
     const sp = getId('sound-panel');
     sp.style.display = 'flex';
-    currentVoiceChannelId = channel_id;
+    currentVoiceChannelId = channelId;
     if(isOnGuild) {
-        currentVoiceChannelGuild = data.guild_id;
+        currentVoiceChannelGuild = data.guildId;
     }
     const soundInfoIcon = getId('sound-info-icon');
     soundInfoIcon.innerText = `${currentChannelName} / ${currentGuildName}`;
-    if (!usersInVoice[channel_id]) {
-        usersInVoice[channel_id] = [];
+    if (!usersInVoice[channelId]) {
+        usersInVoice[channelId] = [];
     }
     const buttonContainer = channelsUl.querySelector(`li[id="${currentVoiceChannelId}"]`);
     const channelSpan = buttonContainer.querySelector('.channelSpan');
     channelSpan.style.marginRight = '30px';
-    if(!usersInVoice[channel_id].includes(currentUserId)) {
-        usersInVoice[channel_id].push(currentUserId);
+    if(!usersInVoice[channelId].includes(currentUserId)) {
+        usersInVoice[channelId].push(currentUserId);
     }
-    usersInVoice[channel_id] = data.users_list;
+    usersInVoice[channelId] = data.usersList;
 });
 socket.on('incoming_audio', async data => {
 

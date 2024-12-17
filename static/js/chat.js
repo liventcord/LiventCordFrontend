@@ -37,7 +37,7 @@ function createMsgOptionButton(message,isReply) {
         newButton.appendChild(textEl);
     if(isReply) {
         newButton.onclick = function() {
-            showReplyMenu(message.id,message.dataset.user_id);
+            showReplyMenu(message.id,message.dataset.userId);
         }
 
     }
@@ -70,10 +70,10 @@ function createMsgOptionButton(message,isReply) {
     buttonContainer.appendChild(newButton);
     return newButton;
 }
-function createOptions3Button(message,messageId,user_id) {
+function createOptions3Button(message,messageId,userId) {
     const button = createMsgOptionButton(message,false);
     button.dataset.m_id = messageId;
-    appendToMessageContextList(messageId,user_id);
+    appendToMessageContextList(messageId,userId);
 }
 
 
@@ -89,7 +89,7 @@ async function handleScroll() {
             let continueLoop = true;
             while (continueLoop) {
                 if (chatContainer.scrollTop <= tenPercentHeight) {
-                    await GetOldMessagesOnScroll();
+                    await getOldMessagesOnScroll();
                 } else {
                     continueLoop = false;
                     console.log('Scroll position exceeded threshold.');
@@ -106,17 +106,17 @@ async function handleScroll() {
 }
 
 
-function createProfileImageChat(newMessage, messageContentElement, nick, user_id, date, isBot, isAfterDeleting=false,replyBar) {
+function createProfileImageChat(newMessage, messageContentElement, nick, userId, date, isBot, isAfterDeleting=false,replyBar) {
     if(!messageContentElement) {
         console.error('No msg content element. ', replyBar); return;
     }
-    const profileImg = createEl('img', { className: 'profile-pic', id: user_id });
-    setProfilePic(profileImg,user_id);
+    const profileImg = createEl('img', { className: 'profile-pic', id: userId });
+    setProfilePic(profileImg,userId);
     
     profileImg.style.width = '40px';
     profileImg.style.height = '40px';
-    profileImg.dataset.user_id = user_id;
-    appendToProfileContextList(user_id);
+    profileImg.dataset.userId = userId;
+    appendToProfileContextList(userId);
 
     profileImg.addEventListener("mouseover", function() { this.style.borderRadius = '0px'; });
     profileImg.addEventListener("mouseout", function() { this.style.borderRadius = '25px'; });
@@ -170,7 +170,7 @@ function createProfileImageChat(newMessage, messageContentElement, nick, user_id
             
         }
     }
-    setProfilePic(profileImg,user_id);
+    setProfilePic(profileImg,userId);
 
     
     messageContentElement.classList.add('onsmallprofile');
@@ -185,7 +185,7 @@ function displayChatMessage(data) {
     console.log(data.content);
 
     const messageId = data.messageId;
-    const user_id = data.userId;
+    const userId = data.userId;
     const content = data.content;
     const channelId = data.channelId;
     let date = data.date;
@@ -206,7 +206,7 @@ function displayChatMessage(data) {
 
 
 
-    const nick = getUserNick(user_id);
+    const nick = getUserNick(userId);
     const newMessage = createEl('div',{className : 'message'});
     const messageContentElement = createEl('p', {id:'message-content-element'});
 
@@ -217,7 +217,7 @@ function displayChatMessage(data) {
     if (addToTop) {
         if(willDisplayProfile) {
             isCreatedProfile = true;
-            createProfileImageChat(newMessage, messageContentElement, nick, user_id, date, isBot);
+            createProfileImageChat(newMessage, messageContentElement, nick, userId, date, isBot);
         } else {
             createNonProfileImage(newMessage, date);
         }
@@ -236,12 +236,12 @@ function displayChatMessage(data) {
         
         if(!lastSenderID || isTimeGap || reply_to_id) {
             isCreatedProfile = true;
-            createProfileImageChat(newMessage, messageContentElement, nick, user_id, date, isBot);
+            createProfileImageChat(newMessage, messageContentElement, nick, userId, date, isBot);
         }
         else {
-            if (lastSenderID != user_id || isTimeGap) {
+            if (lastSenderID != userId || isTimeGap) {
                 isCreatedProfile = true;
-                createProfileImageChat(newMessage, messageContentElement, nick, user_id, date, isBot);
+                createProfileImageChat(newMessage, messageContentElement, nick, userId, date, isBot);
             } else {
                 createNonProfileImage(newMessage, date);
             }
@@ -253,7 +253,7 @@ function displayChatMessage(data) {
     messageContentElement.style.position = 'relative';
     messageContentElement.style.wordBreak = 'break-all';
     newMessage.id = messageId;
-    newMessage.dataset.user_id =  user_id;
+    newMessage.dataset.userId =  userId;
     newMessage.dataset.date =  date;
     newMessage.dataset.content =  content;
     newMessage.dataset.attachment_urls = attachment_urls;
@@ -272,14 +272,14 @@ function displayChatMessage(data) {
     }
 
     if (!addToTop) { 
-        lastSenderID = user_id;
+        lastSenderID = userId;
     } else {
-        lastTopSenderId = user_id;
+        lastTopSenderId = userId;
     }
-    if(user_id != currentUserId) {
+    if(userId != currentUserId) {
         createMsgOptionButton(newMessage,true);
     }
-    createOptions3Button(newMessage,messageId,user_id);
+    createOptions3Button(newMessage,messageId,userId);
     if(isLastMessageStart) {isLastMessageStart = false; }
     if (addToTop) {
         chatContent.insertBefore(newMessage, chatContent.firstChild);
@@ -296,7 +296,7 @@ function displayChatMessage(data) {
         }
     }
 
-    if(user_id == CLYDE_ID) {
+    if(userId == CLYDE_ID) {
         const youCanSeeText = createEl('p',{textContent : 'Bunu sadece sen görebilirsin.'});
         youCanSeeText.style.fontSize = '12px';
         youCanSeeText.style.color = 'rgb(148, 155, 164)';
@@ -321,7 +321,7 @@ function displayChatMessage(data) {
     if(reply_to_id) {
         const foundReply = getId(reply_to_id);
         if(foundReply) {
-            createReplyBar(newMessage, foundReply.dataset.messageId,foundReply.dataset.user_id,foundReply.dataset.content,foundReply.dataset.attachment_urls);
+            createReplyBar(newMessage, foundReply.dataset.messageId,foundReply.dataset.userId,foundReply.dataset.content,foundReply.dataset.attachment_urls);
         } 
         else {
             unknownReplies.push(data);    
@@ -378,7 +378,7 @@ function displayCannotSendMessage(failedMessageContent) {
     const failedId = createRandomId();
     const failedMessage = {
         messageId: failedId,
-        user_id : currentUserId,
+        userId : currentUserId,
         content : failedMessageContent,
         channelId : currentDmId,
         date : createNowDate(),
@@ -399,7 +399,7 @@ function displayCannotSendMessage(failedMessageContent) {
     const textToSend = 'Mesajın iletilemedi. Bunun nedeni alıcıyla herhangi bir sunucu paylaşmıyor olman veya alıcının sadece arkadaşlarından direkt mesaj kabul ediyor olması olabilir.';
     const cannotSendMsg = {
         messageId: createRandomId(),
-        user_id: CLYDE_ID,
+        userId: CLYDE_ID,
         content: textToSend,
         channelId: currentDmId,
         date: createNowDate(),
@@ -480,63 +480,92 @@ function displayStartMessage() {
 
 
 
+function handleOldMessagesResponse(data) {
+    const { history, oldest_message_date } = data
+
+    if (!Array.isArray(history) || history.length === 0) {
+        isReachedChannelEnd = true
+        displayStartMessage()
+        return
+    }
+
+    const repliesList = new Set()
+    const oldestMessageDateOnChannel = new Date(oldest_message_date)
+
+    let firstMessageDate = null
+
+    history.forEach((msgData) => {
+        const msg = new Message(msgData)
+        const displayMessageData = msg.toDisplayData(data.messageId)
+
+        const foundReply = displayChatMessage(displayMessageData)
+
+        if (foundReply) repliesList.add(msg.messageId)
+
+        if (!firstMessageDate || msg.date < firstMessageDate) {
+            firstMessageDate = msg.date
+        }
+    })
+
+    fetchReplies(history, repliesList)
+
+    if (
+        !isNaN(firstMessageDate) &&
+        firstMessageDate.getTime() === oldestMessageDateOnChannel.getTime()
+    ) {
+        displayStartMessage()
+    } else if (isNaN(oldestMessageDateOnChannel)) {
+        console.error('Invalid oldest message date from data.')
+    }
+}
+
 function handleHistoryResponse(data) {
-    if (isChangingPage)  {
-        console.log("Changing page. ignoring history response.");
-        return;
-
+    if (isChangingPage) {
+        console.log('Changing page. Ignoring history response.')
+        return
     }
 
+    isLastMessageStart = false
+    currentMessagesCache = {}
 
-    isLastMessageStart = false;
-    currentMessagesCache = {};
+    const { messages, channelId, guildId, oldestMessageDate } = data
 
-    const firstMessageDateOnChannel = new Date(data.oldestMessageDate); 
-    const { messages: Messages, channelId, guildId } = data;
-
-    console.log( Messages, channelId, guildId);
-
-    if (!Messages || Messages.length === 0) {
-        displayStartMessage();
-        return;
+    if (!Array.isArray(messages) || messages.length === 0) {
+        displayStartMessage()
+        return
     }
 
-    if (guildId !== currentGuildId) {
-        console.warn("History guild id is different from current guild");
-    }
+    if (guildId !== currentGuildId) console.warn('History guild ID is different from current guild')
+    if (channelId !== currentChannelId)
+        console.warn('History channel ID is different from current channel')
 
-    if (channelId !== currentChannelId) {
-        console.warn("History channel id is different from current channel");
-    }
+    cacheInterface.setMessages(channelId, guildId, messages)
 
-    Messages.sort((a, b) => new Date(a.Date) - new Date(b.Date));
+    const firstMessageDateOnChannel = new Date(oldestMessageDate)
+    const repliesList = new Set()
 
-    cacheInterface.setMessages(channelId,guildId,Messages);
-        
-        
-
-    if (Messages[0] && Messages[0].Date && new Date(Messages[0].Date).getTime() === firstMessageDateOnChannel.getTime()) {
-        displayStartMessage();
-    }
-    
-
-    const repliesList = new Set();
     setTimeout(() => {
-        console.log(Messages);
-        Messages.forEach(msg => {
-            const foundReply = displayChatMessage(msg);
+        messages.forEach((msgData) => {
+            const msg = new Message(msgData)
+            const foundReply = displayChatMessage(msg)
+
             if (foundReply) {
-                repliesList.add(msg.MessageId);
-                unknownReplies.pop(msg.MessageId);
+                repliesList.add(msg.messageId)
+                unknownReplies.pop(msg.messageId)
             }
-        });
-    }, 5);
+        })
+    }, 5)
 
-    fetchReplies(Messages, repliesList);
-    
-    setTimeout(() => {
-        scrollToBottom();
-    }, 20);
+    fetchReplies(messages, repliesList)
+
+    setTimeout(scrollToBottom, 20)
+
+    if (
+        messages[0]?.Date &&
+        new Date(messages[0].Date).getTime() === firstMessageDateOnChannel.getTime()
+    ) {
+        displayStartMessage()
+    }
 }
 
 
@@ -551,7 +580,7 @@ function fetchReplies(messages, repliesList=null,goToOld=false) {
         if(existingDate) { 
             if(existingDate > currentLastDate) {
                 replyIdToGo = messageId;
-                GetOldMessages(existingDate,messageId);
+                getOldMessages(existingDate,messageId);
             }
 
             return 
@@ -629,73 +658,19 @@ function updateChatWidth() {
         getId('emojibtn').classList.remove('emojibtn-user-list-hidden');
     }
 }
-function handleOldMessagesResponse(data) {
-    const history = data.history; 
-    if(!history && !Array.isArray(history)) {
-        console.error('History is not in the expected format:', data);
-        return;
-    }
-    if(history.length == 0) { isReachedChannelEnd = true; return; }
 
-    let messages = history.map(msg => ({
-        messageId : msg.messageId,
-        user_id: msg.user_id,
-        content: msg.content,
-        channelId: msg.channelId !== undefined ? msg.channelId : null,
-        date: msg.date,
-        last_edited: msg.last_edited,
-        attachment_urls: msg.attachment_urls,
-        addToTop: false,
-        reply_to_id: msg.reply_to_id,
-        isBot: msg.is_bot,
-        reaction_emojis_ids: msg.reaction_emojis_ids
-    }));
-
-    if(!Array.isArray(messages) || messages.length < 1) { displayStartMessage(); return; } 
-
-    let repliesList = new Set();
-    for (const msg of messages) {
-        let willDisplayProfile = true;
-        const foundReply =  displayChatMessage({
-            ...msg,
-            addToTop: true,
-            replyOf: data.messageId,
-            willDisplayProfile : willDisplayProfile
-        });
-        
-        if (foundReply) {
-            repliesList.add(msg.messageId);
-        }
-    };
-
-    fetchReplies(messages,repliesList);
-    const oldestMessageDateOnChannel = new Date(data.oldest_message_date);
-    if(isNaN(oldestMessageDateOnChannel.getTime())) {
-        console.error('Invalid oldest message date from data.');
-    }
-    messages.sort((a, b) => new Date(a.date) - new Date(b.date));
-    const firstMessageDate = new Date(messages[0].date);
-    if (!isNaN(firstMessageDate.getTime())) {
-        if (firstMessageDate.getTime() === oldestMessageDateOnChannel.getTime()) {
-            displayStartMessage();
-        }
-    } else {
-        console.error('Invalid date for the first message.');
-    }
-
-}
 
 let hasJustFetchedMessages;
-function GetOldMessagesOnScroll() {
+function getOldMessagesOnScroll() {
     if(isReachedChannelEnd || isOnMe) { return; }
     if(hasJustFetchedMessages) { return; }
     const oldestDate = getMessageDate();
     if (!oldestDate) return;
     if(oldestDate == '1970-01-01 00:00:00.000000+00:00') { return; }
-    GetOldMessages(oldestDate);
+    getOldMessages(oldestDate);
 }
 
-function GetOldMessages(date,messageId=null) {
+function getOldMessages(date,messageId=null) {
     let data = {
         date: date.toString(),
         isDm : isOnDm
@@ -717,22 +692,22 @@ function GetOldMessages(date,messageId=null) {
 
 
 
-function GetHistoryFromOneChannel(channelId, isDm = false) {
+function getHistoryFromOneChannel(channelId, isDm = false) {
     console.log('Retrieving history...');
-    const rawMessages = cacheInterface.getMessages(channelId);
+    const messages = cacheInterface.getMessages(channelId);
 
-    if (!isDm && rawMessages && Array.isArray(rawMessages)) {
+    if (!isDm && messages && Array.isArray(messages)) {
         let repliesList = new Set();
 
-        if (rawMessages.length > 0) {
+        if (messages.length > 0) {
             currentMessagesCache = {};
-            for (const msg of rawMessages) {
+            for (const msg of messages) {
                 const foundReply = displayChatMessage(msg);
                 if (foundReply) {
                     repliesList.add(msg.messageId);
                 }
             }
-            fetchReplies(rawMessages, repliesList);
+            fetchReplies(messages, repliesList);
             return; 
 
         } else {
@@ -744,8 +719,6 @@ function GetHistoryFromOneChannel(channelId, isDm = false) {
 }
 
 function fetchMessagesFromServer(channelId, isDm = false) {
-    console.warn('Falling back to fetching messages from the server...');
-
     let requestData = {
         channelId: channelId,
         isDm: isDm,
@@ -794,17 +767,17 @@ function handleReplies() {
         console.log(replierElements, message.replies);
         replierElements.forEach(replier => {
             message.replies.forEach(msg => {
-                createReplyBar(replier, message.messageId, msg.user_id, msg.content, msg.attachment_urls);
-                console.log("Creating replly bar.", replier, message.messageId, msg.user_id, msg.content);
+                createReplyBar(replier, message.messageId, msg.userId, msg.content, msg.attachment_urls);
+                console.log("Creating replly bar.", replier, message.messageId, msg.userId, msg.content);
             });
         });
     });
 }
 
 
-function deleteLocalMessage(messageId,guild_id,channelId,isDm) {
+function deleteLocalMessage(messageId,guildId,channelId,isDm) {
     if(isOnGuild && channelId != currentChannelId || isOnDm && isDm && channelId != currentDmId) { 
-        console.error("Can not delete message: ",guild_id,channelId, messageId,  currentGuildId,  currentChannelId);
+        console.error("Can not delete message: ",guildId,channelId, messageId,  currentGuildId,  currentChannelId);
         return; 
     }
     const messages = Array.from(chatContent.children); 
@@ -812,17 +785,17 @@ function deleteLocalMessage(messageId,guild_id,channelId,isDm) {
     for (let i = 0; i < messages.length; i++) {
         let element = messages[i];
         if (!element.classList || !element.classList.contains('message')) { continue; }
-        const user_id = element.dataset.user_id;
+        const userId = element.dataset.userId;
     
         if (String(element.id) == String(messageId)) {
             console.log("Removing element:", messageId);
             element.remove();
             const foundMsg = getMessageFromChat(false);
             if(foundMsg) {
-                lastSenderID = foundMsg.dataset.user_id;
+                lastSenderID = foundMsg.dataset.userId;
             }
         } // Check if the element matches the currentSenderOfMsg and it doesn't have a profile picture already
-        else if (!element.querySelector('.profile-pic') && getBeforeElement(element).dataset.user_id != element.dataset.user_id) {
+        else if (!element.querySelector('.profile-pic') && getBeforeElement(element).dataset.userId != element.dataset.userId) {
             console.log("Creating profile img...");
             const messageContentElement = element.querySelector('#message-content-element');
             const date = element.dataset.date;
@@ -830,9 +803,9 @@ function deleteLocalMessage(messageId,guild_id,channelId,isDm) {
             if(smallDate)  {
                 smallDate.remove();
             }
-            const nick = getUserNick(user_id);
+            const nick = getUserNick(userId);
             
-            createProfileImageChat(element, messageContentElement, nick, user_id, date, true);
+            createProfileImageChat(element, messageContentElement, nick, userId, date, true);
             break;
         }
     }

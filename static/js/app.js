@@ -111,10 +111,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     isDomLoaded = true;
     currentUserId = passed_user_id;
-    currentUserName = user_name;
+    currentUserName = nick_name;
     currentDiscriminator = user_discriminator;
 
-    getId('self-name').textContent = user_name;
+    getId('self-name').textContent = nick_name;
     getId('self-discriminator').textContent = '#'+user_discriminator;
     
     
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const parts = window.location.pathname.split('/');
         const friendId = parts[3];
         if (isDefined(friendId)) {
-            OpenDm(friendId);
+            openDm(friendId);
         }
     } else if (isDefined(passed_guild_id) && passed_channel_id && isDefined(passed_owner_id)) {
         loadGuild(passed_guild_id, passed_channel_id, passed_guild_name, passed_owner_id);
@@ -148,9 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
         readenMessagesCache = passed_message_readen;
     }
 
-    if (isDefined(friends_status) && typeof friends_status === 'object') {
-        friends_cache = friends_status;
-    }
+
 
     if (isDefined(passed_friend_id)) {
         addUser(passed_friend_id, passed_friend_name, passed_friend_discriminator, passed_friend_blocked);
@@ -233,7 +231,7 @@ function readCurrentMessages() {
 
 
 
-function createReplyBar(newMessage,messageId,user_id,content,attachment_urls) {
+function createReplyBar(newMessage,messageId,userId,content,attachmentUrls) {
     if(newMessage.querySelector('.replyBar')) { return; }
     const smallDate = newMessage.querySelector('.small-date-element');
     if(smallDate)  {
@@ -246,16 +244,16 @@ function createReplyBar(newMessage,messageId,user_id,content,attachment_urls) {
     const messageContentElement = newMessage.querySelector('#message-content-element')
 
 
-    const nick = getUserNick(user_id);
+    const nick = getUserNick(userId);
     replyBar.style.height = '100px';
-    const replyAvatar = createEl('img', {className : 'profile-pic', id : user_id});
+    const replyAvatar = createEl('img', {className : 'profile-pic', id : userId});
     replyAvatar.classList.add('reply-avatar');
     replyAvatar.style.width = '15px';
     replyAvatar.style.height = '15px';
 
-    setProfilePic(replyAvatar,user_id);
+    setProfilePic(replyAvatar,userId);
     const replyNick = createEl('span',{textContent:nick,className:'reply-nick'});
-    const textToWrite = content ? content : attachment_urls ? attachment_urls : 'Eki görüntülemek için tıkla';
+    const textToWrite = content ? content : attachmentUrls ? attachmentUrls : 'Eki görüntülemek için tıkla';
     const replyContent = createEl('span',{className:'replyContent', textContent:textToWrite})
 
     
@@ -281,28 +279,11 @@ function createReplyBar(newMessage,messageId,user_id,content,attachment_urls) {
 
 
 
-function removeDm(user_id) {
+function removeDm(userId) {
 
 
 }
 
-function getGuildName(guildId) {
-    const guild = currentGuildData[guildId];
-    return guild ? guild.name : 'Unknown Guild';
-}
-
-function getManageableGuilds() {
-    if(!permissionsMap) { return [] }
-    const guildsWeAreAdminOn = [];
-    let isFoundAny = false;
-    for (const key in permissionsMap) {
-        if (permissionsMap[key].isAdmin) {
-            guildsWeAreAdminOn.push(key);
-            isFoundAny = true;
-        }
-    }
-    return isFoundAny ? guildsWeAreAdminOn : null;
-}
 
 
 
@@ -330,7 +311,7 @@ let isChangingPage = false;
 function userExistsDm(userId) {
     return userId in dm_friends;
 }
-function OpenDm(friend_id) {
+function openDm(friend_id) {
     const wasOnDm = isOnDm;
     isOnDm = true;
     currentDmId = friend_id;
@@ -385,7 +366,7 @@ function loadMainMenu(isChangingUrl=true) {
     }
     
     function handleDm() {
-        OpenDm(lastDmId)
+        openDm(lastDmId)
         disableElement('friends-container');
     }
     if(isOnGuild) {
@@ -442,7 +423,7 @@ function changecurrentGuild() {
     isChangingPage = false;
 }
 
-function loadApp(friend_id=null) {
+function loadApp(friendId=null) {
     if(isChangingPage) {return;  }
     isChangingPage = true;
     const userList = getId('user-list');
@@ -456,15 +437,14 @@ function loadApp(friend_id=null) {
     userList.innerHTML = ""; 
     userList.classList.remove('friendactive'); 
     enableElement('guild-name');
-    console.log("Loading app with friend id:", friend_id);
+    console.log("Loading app with friend id:", friendId);
 
-    if(!friend_id) {
+    if(!friendId) {
         isOnGuild = true;
         isOnDm = false;
         if(currentDmId) {
             lastDmId = currentDmId;
         }
-        console.log(isDomLoaded);
         
         fetchMembers();
         getChannels();
@@ -486,17 +466,17 @@ function loadApp(friend_id=null) {
         enableElement('dm-profile-sign');
         enableElement('guild-container',false,true);
         disableElement('guild-settings-button');
-        activateDmContainer(friend_id);
-        const friendNick = passed_friend_name != undefined && passed_friend_id == friend_id ? passed_friend_name : getUserNick(friend_id);
+        activateDmContainer(friendId);
+        const friendNick = passed_friend_name != undefined && passed_friend_id == friendId ? passed_friend_name : getUserNick(friendId);
         chatInput.placeholder = '@' + friendNick + ' kullanıcısına mesaj gönder';
         channelTitle.textContent = friendNick;
         disableElement('hash-sign');
         enableElement('dm-profile-sign')
         const dmProfSign = getId('dm-profile-sign');
-        setProfilePic(dmProfSign,friend_id);
-        dmProfSign.dataset.cid = friend_id;
+        setProfilePic(dmProfSign,friendId);
+        dmProfSign.dataset.cid = friendId;
         
-        UpdateDmFriendList(friend_id,friendNick,passed_friend_discriminator);
+        updateDmFriendList(friendId,friendNick,passed_friend_discriminator);
     }
     
     
@@ -513,20 +493,20 @@ function loadApp(friend_id=null) {
     isChangingPage = false;
 }
 
-function changeCurrentDm(friend_id) {
+function changeCurrentDm(friendId) {
     isChangingPage = true;
     isOnMe = false;
     isOnGuild = false;
     isOnDm = true;
     isReachedChannelEnd = false;
     
-    const friendNick = getUserNick(friend_id);
+    const friendNick = getUserNick(friendId);
     channelTitle.textContent = friendNick;
     chatInput.placeholder = '@' + friendNick + ' kullanıcısına mesaj gönder';
     const dmProfSign = getId('dm-profile-sign');
-    setProfilePic(dmProfSign,friend_id);
-    dmProfSign.dataset.cid = friend_id;
-    UpdateDmFriendList(friend_id,friendNick)
+    setProfilePic(dmProfSign,friendId);
+    dmProfSign.dataset.cid = friendId;
+    updateDmFriendList(friendId,friendNick)
 
     isChangingPage = false;
 }

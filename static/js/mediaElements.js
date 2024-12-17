@@ -208,7 +208,7 @@ function processMediaLink(link, newMessage, messageContentElement, content) {
         }
 
         //if (!isJson && !isYt) {
-        //    if (String(user_id) === String(lastSenderID)) {
+        //    if (String(userId) === String(lastSenderID)) {
         //        mediaElement.style.marginLeft = '55px';
         //    } else {
         //        mediaElement.style.marginLeft = '55px';

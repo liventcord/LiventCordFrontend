@@ -14,20 +14,8 @@
     
     
 </head>
-<style>
-    .dropdown-button {
-        position: relative; 
-        padding-right: 24px;
-        font-size: 16px; 
-    }
-      
-    .dropdown-button svg {
-    width: 35px; 
-    height: 35px;
-    vertical-align: middle; 
-    }
-      
-</style>
+
+
 <body>
     <div id="loading-screen"><img id="loading-element" src="/static/images/icons/icon.png"></div>
 
@@ -174,7 +162,7 @@
         <div id="channel-info" class="truncated"></div>
         <svg x="0" y="0" id="hash-sign"role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z" clip-rule="evenodd" class=""></path></svg>
         <img id="dm-profile-sign" class="profile-pic"></img>
-        <span class="dm-bubble offline" id="dm-profile-sign-bubble" isoffline="true" style="transition: display 0.5s ease-in-out;"></span>
+        <span class="dm-bubble offline" id="dm-profile-sign-bubble" style="transition: display 0.5s ease-in-out;"></span>
     </div>
     
 
@@ -338,6 +326,7 @@
     <script src="/static/js/contextMenuActions.js"></script>
     <script src="/static/js/extras.js"></script> 
     <script src="/static/js/friends.js"></script> 
+    <script src="/static/js/friendui.js"></script> 
     <script src="/static/js/guild.js"></script> 
     <script src="/static/js/guildPermissions.js"></script> 
     <script src="/static/js/mediaElements.js"></script> 
@@ -459,7 +448,7 @@
         var email = jsonData.email;
         var masked_email = getMaskedEmail(email);
         var passed_user_id = jsonData.userId;
-        var user_name = jsonData.userName;
+        var nick_name = jsonData.nickName;
         var user_discriminator = jsonData.userDiscriminator;
         var passed_guild_id = jsonData.guildId;
         var passed_friend_id = jsonData.friendId;
@@ -470,8 +459,8 @@
         var passed_message_readen = jsonData.messagesReaden;
         var shared_guilds_map = jsonData.sharedGuildsMap;
         var permissionsMap = jsonData.permissionsMap;
-        var friends_status = jsonData.friendsStatus;
-        var dm_friends = jsonData.dmFriends || [];
+        var passed_friends_status = jsonData.friendsStatus;
+        var passed_dm_friends = jsonData.dmFriends || [];
         var guilds_data = jsonData.guildsJson;
         var guild_members = jsonData.guildMembers;
         

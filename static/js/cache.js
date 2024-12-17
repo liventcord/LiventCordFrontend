@@ -82,25 +82,22 @@ class ChannelCache extends BaseCache {
 
 
 class GuildMembersCache extends BaseCache {
-    setMembers(guildId, members) {
-        this.setObject(guildId, members);
-    }
-
     getMembers(guildId) {
         return this.get(guildId) || [];
     }
 
     updateMember(guildId, member, add = true) {
-        const members = this.getGuildMembers(guildId);
+        const members = this.getMembers(guildId);
         const index = members.findIndex(existingMember => existingMember.id === member.id);
 
-        if (add && index === -1) {
-            members.push(member);
-        } else if (!add && index !== -1) {
-            members.splice(index, 1);
-        }
+        if (add && index === -1) members.push(member);
+        else if (!add && index !== -1) members.splice(index, 1);
 
         this.set(guildId, members);
+    }
+
+    updateMembers(guildId, newMembers, add = true) {
+        newMembers.forEach(member => this.updateMember(guildId, member, add));
     }
 }
 
@@ -200,26 +197,11 @@ class GuildCacheInterface {
 
     //member
     getMembers(guildId) {
-        return this.getGuild(guildId)?.members.getMembers() || [];
-    }
-
-    setMembers(guildId, members) {
-        this.getGuild(guildId)?.members.setMembers(members);
+        return this.getGuild(guildId)?.members.getMembers(guildId) || [];
     }
 
     updateMembers(guildId, newMembers, add = true) {
-        const existingMembers = this.getMembers(guildId);
-        const memberMap = new Map(existingMembers.map(member => [member.id, member]));
-
-        newMembers.forEach(member => {
-            if (add && !memberMap.has(member.id)) {
-                memberMap.set(member.id, member);
-            } else if (!add && memberMap.has(member.id)) {
-                memberMap.delete(member.id);
-            }
-        });
-
-        this.setMembers(guildId, Array.from(memberMap.values()));
+        this.getGuild(guildId)?.members.updateMembers(guildId, newMembers, add);
     }
 
     addMember(guildId, member) {
@@ -230,6 +212,9 @@ class GuildCacheInterface {
         this.updateMembers(guildId, [{ id: memberId }], false);
     }
 
+    isMembersEmpty(guildId) {
+        return this.getMembers(guildId).length === 0;
+    }
     //channels
     getChannels(guildId) {
         return this.getGuild(guildId)?.channels.getChannels() || [];

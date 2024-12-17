@@ -17,15 +17,20 @@ const inviteVoiceHtml = '<svg class="icon_cdc675" aria-hidden="true" role="img" 
 const selectedChanColor = 'rgb(64, 66, 73)';
 const hoveredChanColor = 'rgb(53, 55, 60';
 
-
+let loadingScreen;
 function enableLoadingScreen() {
-    const loadingScreen = createEl('div', { id: 'loading-screen' });
+    loadingScreen = createEl('div', { id: 'loading-screen' });
     document.body.appendChild(loadingScreen);
     const loadingElement = createEl('img', { id: 'loading-element' });
     loadingScreen.appendChild(loadingElement);
     loadingElement.src = '/static/images/icons/icon.png';
 }
-
+function isLoadingScreen() {
+    if(!loadingScreen) {
+        return false;
+    }
+    return loadingScreen.style.display == 'flex';
+}
 
 
 function toggleEmail() {
@@ -247,7 +252,6 @@ async function setProfilePic(profileImg, userId, isTimestamp = false) {
 }
 
 function clickMainLogo() {
-    console.log("Main logo clicked!");
     logoClicked ++;
     if(logoClicked >= 14) {
         logoClicked = 0;

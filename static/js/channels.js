@@ -18,7 +18,7 @@ function getChannels() {
             console.log("Using cached channels: ",channels);
 
         } else {
-            console.log("Channel cache is empty. fetching channels...");
+            console.warn("Channel cache is empty. fetching channels...");
             socket.emit('get_channels', { 'guildId': currentGuildId }); 
         }
     } else {
@@ -46,7 +46,7 @@ async function changeChannel(newChannel) {
         lastSenderID = '';
         chatContent.innerHTML = '';
         currentLastDate = '';
-        GetHistoryFromOneChannel(currentChannelId);
+        getHistoryFromOneChannel(currentChannelId);
         closeReplyMenu();
     } else {
         joinVoiceChannel(channelId);
@@ -69,8 +69,8 @@ async function changeChannel(newChannel) {
                         allUsersContainer = createEl('div',{className:'channel-users-container'});
                     }
                     channelButton.style.width = '100%';
-                    usersInChannel.forEach((user_id,index) => {
-                        drawVoiceChannelUser(index,user_id,channelId,channelButton,allUsersContainer,isTextChannel);
+                    usersInChannel.forEach((userId,index) => {
+                        drawVoiceChannelUser(index,userId,channelId,channelButton,allUsersContainer,isTextChannel);
                     });
                 }
             }
@@ -322,6 +322,7 @@ function createChannelElement(channel) {
 
 function addChannel(channel) {
     const channelId = (channel.ChannelId || channel.channelId)?.toLowerCase();
+    const guildId = (channel.GuildId || channel.guildId)?.toLowerCase();
     const channelName = (channel.ChannelName || channel.channelName)?.toLowerCase();
     const isTextChannel = channel.IsTextChannel ?? channel.isTextChannel;
 
@@ -333,7 +334,7 @@ function addChannel(channel) {
     console.log(typeof(channel), channel);
     currentChannels.push(channel);
 
-    cacheInterface.addChannel(channel.guild_id, channel);
+    cacheInterface.addChannel(guildId, channel);
 
     removeChannelEventListeners();
     createChannelElement(channel);
@@ -369,32 +370,36 @@ function updateChannels(channels) {
 
 
 function removeChannel(data) {
-    guildCache.removeChannel(data.guild_id, data.ChannelId);
+    const guildId = data.guildId;
+    const channelId = data.channelId;
+    guildCache.removeChannel(guildId, channelId);
 
-    const channelsArray = cacheInterface.getChannels(data.guild_id);
+    const channelsArray = cacheInterface.getChannels(guildId);
     currentChannels = channelsArray;
-    removeChannelElement(data.ChannelId);
-    if(currentChannelId == data.ChannelId) {
-        const firstChannel = channelsArray[0].ChannelId;
+    removeChannelElement(channelId);
+    if(currentChannelId == channelId) {
+        const firstChannel = channelsArray[0].channelId;
         loadGuild(currentGuildId, firstChannel);
     }
 }
 
 function editChannel(data) {
-    guildCache.editChannel(data.guild_id, data.ChannelId, { ChannelName: data.ChannelName });
+    const guildId = data.guildId;
+    const channelId = data.channelId;
+    const channelName = data.channelName;
+    guildCache.editChannel(guildId, channelId, { channelName: channelName });
 
-    const channelsArray = cacheInterface.getChannels(data.guild_id);
+    const channelsArray = cacheInterface.getChannels(guildId);
     currentChannels = channelsArray;
 }
 
 
 // voice
 
-
-function drawVoiceChannelUser(index,user_id,channelId,channelButton,allUsersContainer,isTextChannel) {
+function drawVoiceChannelUser(index,userId,channelId,channelButton,allUsersContainer,isTextChannel) {
     
-    const userName = getUserNick(user_id);
-    const userContainer = createEl('li', { className: 'channel-button',id : user_id });
+    const userName = getUserNick(userId);
+    const userContainer = createEl('li', { className: 'channel-button',id : userId });
     userContainer.addEventListener('mouseover', function(event) {
         //mouseHoverChannelButton(userContainer, isTextChannel,channelId);
     });
@@ -403,11 +408,11 @@ function drawVoiceChannelUser(index,user_id,channelId,channelButton,allUsersCont
     });
 
 
-    createUserContext(user_id);
+    createUserContext(userId);
     
-    userContainer.id = `user-${user_id}`;
+    userContainer.id = `user-${userId}`;
     const userElement = createEl('img', { style: 'width: 25px; height: 25px; border-radius: 50px; position:fixed; margin-right: 170px;' });
-    setProfilePic(userElement,user_id);
+    setProfilePic(userElement,userId);
     userContainer.appendChild(userElement);
     userContainer.style.marginTop = index == 0 ? '30px' : '10px';
     userContainer.style.marginLeft = '-220px'; 

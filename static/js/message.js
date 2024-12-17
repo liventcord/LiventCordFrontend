@@ -1,3 +1,49 @@
+class Message {
+    constructor({
+        messageId,
+        userId,
+        content,
+        channelId = null,
+        date,
+        lastEdited,
+        attachmentUrls,
+        replyToId,
+        isBot,
+        reactionEmojisIds
+    }) {
+        this.messageId = messageId
+        this.userId = userId
+        this.content = content
+        this.channelId = channelId
+        this.date = new Date(date) 
+        this.lastEdited = lastEdited
+        this.attachmentUrls = attachmentUrls
+        this.replyToId = replyToId
+        this.isBot = isBot
+        this.reactionEmojisIds = reactionEmojisIds
+        this.addToTop = false
+    }
+
+    toDisplayData(replyOf) {
+        return {
+            messageId: this.messageId,
+            userId: this.userId,
+            content: this.content,
+            channelId: this.channelId,
+            date: this.date,
+            lastEdited: this.lastEdited,
+            attachmentUrls: this.attachmentUrls,
+            addToTop: true,
+            replyOf,
+            willDisplayProfile: true,
+            replyToId: this.replyToId,
+            isBot: this.isBot,
+            reactionEmojisIds: this.reactionEmojisIds
+        }
+    }
+}
+
+
 async function sendMessage(content, user_ids) {
     if (content == '') { return }
     if(isOnDm && currentDmId && !isFriend(currentDmId) && !hasSharedGuild(currentDmId)) {
@@ -39,11 +85,11 @@ async function sendMessage(content, user_ids) {
         });
         if (uploadResponse.ok) {
             const uploadData = await uploadResponse.json();
-            data.file_name = uploadData.file_name;
+            data.fileName = uploadData.fileName;
             data.type = uploadData.type;
-            data.attachment_urls = uploadData.attachment_urls;
-            data.attachment_id = uploadData.attachment_id;
-            console.log('File uploaded successfully:', data.file_name);
+            data.attachmentUrls = uploadData.attachmentUrls;
+            data.attachmentId = uploadData.attachmentId;
+            console.log('File uploaded successfully:', data.fileName);
             if(isOnGuild) {
                 socket.emit('new_message', data);
             } else {

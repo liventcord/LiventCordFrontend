@@ -14,14 +14,14 @@ userNames['1'] = {
 
 
 
-function getUserNick(user_id) { 
-    if(user_id && currentUserId && currentUserId == user_id) {
+function getUserNick(userId) { 
+    if(userId && currentUserId && currentUserId == userId) {
         return currentUserName;
     }
-    return user_id in userNames ? userNames[user_id].nick : deletedUser;
+    return userId in userNames ? userNames[userId].nick : deletedUser;
 }
-function getUserDiscriminator(user_id) { 
-    return user_id in userNames ? userNames[user_id].discriminator : '0000';
+function getUserDiscriminator(userId) { 
+    return userId in userNames ? userNames[userId].discriminator : '0000';
 }
 
 
@@ -75,21 +75,21 @@ function addUser(userId, nick, discriminator,isBlocked) {
       is_blocked: Boolean(isBlocked)
     };
 }
-function refreshUserProfileImage(user_id,user_nick=null) {
-    if (user_id == currentUserId) {
-        updateSelfProfile(user_id,null,true,true);
+function refreshUserProfileImage(userId,userNick=null) {
+    if (userId == currentUserId) {
+        updateSelfProfile(userId,null,true,true);
     }
     // from user list
     const profilesList = userList.querySelectorAll('.profile-pic');
     profilesList.forEach(user => {
-        if(user_nick) {
-            if (user.dataset.user_id === user_id) {
-                user.parentNode.querySelector('.profileName').innerText = user_nick;
+        if(userNick) {
+            if (user.dataset.userId === userId) {
+                user.parentNode.querySelector('.profileName').innerText = userNick;
             }
         }
-        if(user_id) {
-            if (user.dataset.user_id === user_id) {
-                user.src = `/profiles/${user_id}.png`;
+        if(userId) {
+            if (user.dataset.userId === userId) {
+                user.src = `/profiles/${userId}.png`;
             }
         }
     });
@@ -97,14 +97,14 @@ function refreshUserProfileImage(user_id,user_nick=null) {
     // from chat container 
     const usersList = chatContainer.querySelectorAll('.profile-pic');
     usersList.forEach(user => {
-        if(user_nick) {
-            if (user.dataset.user_id === user_id) {
-                user.parentNode.querySelector('.profileName').innerText = user_nick;
+        if(userNick) {
+            if (user.dataset.userId === userId) {
+                user.parentNode.querySelector('.profileName').innerText = userNick;
             }
         }
-        if(user_id) {
-            if (user.dataset.user_id === user_id) {
-                user.src = `/profiles/${user_id}.png`;
+        if(userId) {
+            if (user.dataset.userId === userId) {
+                user.src = `/profiles/${userId}.png`;
             }
         }
     });
@@ -171,7 +171,7 @@ function updateUserOnlineStatus(userId, isOnline) {
     for (const guildId in guildMembers) {
         const users = guildMembers[guildId];
         
-        const user = users.find(user => user.user_id === userId);
+        const user = users.find(user => user.userId === userId);
         if (user) {
             user.is_online = isOnline;
             console.log(`User ${userId} online status updated to ${isOnline} in guild ${guildId}`);

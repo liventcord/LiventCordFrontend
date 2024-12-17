@@ -1573,19 +1573,19 @@ th {
 
 
 #close-settings-button {
-    width: 36px; /* Set a width to make the circle visible */
-    height: 36px; /* Set a height to make the circle visible */
+    width: 36px; 
+    height: 36px; 
     display: flex;
     align-items: center;
     justify-content: center;
     color: oklab(0.786807 -0.0025776 -0.0110238);
-    background-color: #ffffff00; /* Transparent background */
+    background-color: #ffffff00;
     border: 2px solid oklab(0.786807 -0.0025776 -0.0110238);
-    border-radius: 50%; /* Circular shape */
-    cursor: pointer; /* Pointer cursor for clickability */
+    border-radius: 50%;
+    cursor: pointer; 
     margin-left: 700px;
     margin-top: 20px;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2); /* Optional: add shadow for better visibility */
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
 
 #close-settings-button svg {

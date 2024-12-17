@@ -1,3 +1,50 @@
+.info-container {
+    width: 600px;
+    height: 50px;
+    background-color: #312e2e;
+    z-index: 15;
+    border-radius: 25px;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: moveAndFade 9s forwards;
+}
+
+#info-message {
+    color: #ffffff;
+    font-size: 25px;
+    white-space: nowrap;
+    z-index: 25;
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+}
+
+@keyframes moveAndFade {
+    0% {
+        left: -900px;
+        opacity: 1;
+    }
+    40% {
+        left: 50%;
+        opacity: 1;
+        transform: translateX(-50%);
+        animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    60% {
+        left: 50%;
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+    100% {
+        left: 150%;
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+}
+
 
 
 
@@ -460,16 +507,16 @@
 }
 
 .search-dropdown {
-    position: fixed; /* Use fixed positioning */
-    top: 50px; /* Adjust this based on how far down you want the dropdown */
+    position: fixed; 
+    top: 50px;
     right: 50px;
-    width: 300px; /* Fixed width for the dropdown */
+    width: 300px; 
     outline: 1px solid rgba(0, 0, 0, 0.1);
     background: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
-    pointer-events: auto; /* Ensure dropdown is clickable */
-    white-space: nowrap; /* Prevent wrapping */
+    pointer-events: auto; 
+    white-space: nowrap; 
 }
 .hidden {
     display: none;
@@ -556,9 +603,9 @@
     display: flex;
     align-items: center;
     margin-top: 9px;
-    margin-left: 15px; /* This can be adjusted for positioning */
+    margin-left: 15px; 
     color: rgb(180, 185, 192);
-    position: relative; /* Keep dropdown anchored relative to this */
+    position: relative; 
 }
 
 .iconWrapper :hover {
@@ -772,6 +819,7 @@
 #settings-icon-g:hover {
     transform: matrix(0, 0, 0, 0, 0, 0);
 }
+  
 
 .dropdown-button {
     color: lightgray;
@@ -787,6 +835,7 @@
     width: 90%;
     height: 40px;
     font-size: 14px;
+    padding-right: 24px;
 
     background-color: transparent;
     border: none;
@@ -797,7 +846,12 @@
 
     align-items: center;
 }
-
+.dropdown-button svg {
+    width: 35px; 
+    height: 35px;
+    vertical-align: middle; 
+}
+  
 .dropdown-button:hover {
     background-color: rgb(80 92 220);
 }
@@ -819,9 +873,9 @@
     background-color: #b5bac1;
     color: #2b2d31;
 
-    text-align: center; /* Horizontally center the text */
+    text-align: center; 
     display: flex;
-    justify-content: center; /* Vertically center the text */
+    justify-content: center; 
     align-items: center;
 }
 #reply-container {
@@ -849,11 +903,11 @@
     border-radius: 0 0 7px 7px;
     display: none;
     align-items: center;
-    justify-content: space-between; /* Spread items to the edges */
+    justify-content: space-between;
     background-color: rgb(86, 98, 232);
     position: fixed;
     overflow: hidden;
-    padding: 0 12px; /* Add padding to ensure space around the content */
+    padding: 0 12px;
 }
 
 #newMessagesText {
@@ -861,7 +915,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 14px;
-    margin-right: auto; /* Push this element to the left */
+    margin-right: auto; 
 }
 
 #newMessagesBar span:last-of-type {
@@ -872,7 +926,7 @@
 #newMessagesBar svg {
     position: relative;
     z-index: 2;
-    margin-left: 8px; /* Adjust spacing if needed */
+    margin-left: 8px;
 }
 
 
@@ -922,7 +976,7 @@
 }
 
 .offline-users {
-    margin-top: 100px; /* Add spacing of 100px */
+    margin-top: 100px;
 }
 
 
@@ -1400,7 +1454,7 @@ textarea::-webkit-scrollbar-track {
     font-size: 0.7em;
     color: grey;
     filter: brightness(1.4);
-    margin-left: 20px; /* Ensures 20px gap after the nickname */
+    margin-left: 20px;
 }
 
 
@@ -1587,33 +1641,32 @@ textarea::-webkit-scrollbar-track {
 
 #userMentionDropdown {
     border: 1px solid #3c3e42;
-    display: none; /* Hidden by default */
+    display: none;
     background: #2b2d31;
-    max-height: 150px; /* Maximum height for the dropdown */
-    width: calc(100vw - 585px); /* Full width minus specific pixels */
-    overflow-y: auto; /* Enable vertical scrolling */
-    z-index: 1000; /* Make sure it appears above other elements */
-    bottom: 100%; /* Position the dropdown above the input */
-    left: 0; /* Align the dropdown with the left edge of the input */
-    margin-bottom: 4px; /* Space between input and dropdown */
+    max-height: 150px; 
+    width: calc(100vw - 585px);
+    overflow-y: auto; 
+    z-index: 1000; 
+    bottom: 100%;
+    left: 0; 
+    margin-bottom: 4px; 
 }
 
-/* Styles for mention options */
 .mention-option {
-    padding: 8px; /* Padding inside each option */
-    cursor: pointer; /* Pointer cursor on hover */
+    padding: 8px; 
+    cursor: pointer;
 }
 
 .mention-option:hover {
-    background-color: #232427; /* Background on hover */
+    background-color: #232427; 
 }
 
 .mention-highlight {
-    background-color: #35373c; /* Highlighted background */
+    background-color: #35373c; 
 }
 
 .mention {
-    color: blue; /* Mention text color */
+    color: blue; 
 }
 
 

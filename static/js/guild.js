@@ -4,6 +4,23 @@ let currentGuildName = '';
 
 
 
+function getGuildName(guildId) {
+    const guild = currentGuildData[guildId];
+    return guild ? guild.name : 'Unknown Guild';
+}
+
+function getManageableGuilds() {
+    if(!permissionsMap) { return [] }
+    const guildsWeAreAdminOn = [];
+    let isFoundAny = false;
+    for (const key in permissionsMap) {
+        if (permissionsMap[key].isAdmin) {
+            guildsWeAreAdminOn.push(key);
+            isFoundAny = true;
+        }
+    }
+    return isFoundAny ? guildsWeAreAdminOn : null;
+}
 
 
 
@@ -37,20 +54,24 @@ function updateGuildList(guildData) {
 
     guildData.guilds.forEach((guild) => {
         if (getId(guild.GuildId)) return;
+        const guildName = guild.guildName;
+        const ownerId = guild.ownerId;
+        const guildId = guild.guildId;
+        const rootChannel = guild.rootChannel;
         
-        const imgSrc = guild.IsGuildUploadedImg ? `/guilds/${guild.GuildId}` : createBlackImage();
+        const imgSrc = guild.IsGuildUploadedImg ? `/guilds/${guildId}` : createBlackImage();
         
-        cacheInterface.setGuildOwner(guild.GuildId, guild.OwnerId)
+        cacheInterface.setGuildOwner(guildId, ownerId)
         const li = createEl('li');
-        const img = createEl('img', { className: 'guilds-list', id: guild.GuildId, src: imgSrc });
+        const img = createEl('img', { className: 'guilds-list', id: guildId, src: imgSrc });
         img.addEventListener('click', () => {
-            loadGuild(guild.GuildId, guild.RootChannel, guild.GuildName);
+            loadGuild(guildId, rootChannel, guildName);
         });
         
         li.appendChild(img);
         li.appendChild(createEl('div', { className: 'white-rod' }));
         guildsList.appendChild(li);
-        guildNames[guild.GuildId] = guild.GuildName;
+        guildNames[guildId] = guildName;
     });
     
     addKeybinds();
@@ -73,8 +94,8 @@ function appendToGuildList(guild) {
     addKeybinds();
 }
 
-function removeFromGuildList(guild_id) {
-    const guildImg = getId(guild_id);
+function removeFromGuildList(guildId) {
+    const guildImg = getId(guildId);
     if (guildImg) {
         const parentLi = guildImg.closest('li');
         if (parentLi) parentLi.remove();
@@ -237,7 +258,7 @@ function fetchMembers() {
 
     if(members.length > 0) {
         console.log("Using cached members...");
-        updateMemberList(cacheInterface.getMembers(currentGuildId));
+        updateMemberList(members);
 
     } else {
         console.log("Fetching members...");
@@ -249,7 +270,7 @@ function fetchMembers() {
 
 
 function getGuildUsers() {
-    if (!guildCache.isMembersEmpty(currentGuildId) || !currentGuildId) { return; }
+    if (!cacheInterface.isMembersEmpty(currentGuildId) || !currentGuildId) { return; }
     
     const guildMembers = cacheInterface.getMembers(currentGuildId);
     if (!guildMembers) { return; }
@@ -259,8 +280,8 @@ function getGuildUsers() {
     for (const userId in guildMembers) {
         const user = guildMembers[userId];
         usersToReturn.push({
-            name: user.name,
-            image: getProfileUrl(user.user_id) 
+            name: user.Nickname,
+            image: getProfileUrl(user.userId) 
         });
     }
     console.log(usersToReturn)
@@ -270,8 +291,8 @@ function getGuildUsers() {
 }
 
 
-function joinToGuild(invite_id) {
-    socket.emit('join_to_guild',{'invite_id':invite_id});
+function joinToGuild(inviteId) {
+    socket.emit('join_to_guild',{'invite_id':inviteId});
 }
 
 function leaveCurrentGuild() {

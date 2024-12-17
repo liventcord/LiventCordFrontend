@@ -138,18 +138,22 @@ function drawProfilePop(userData) {
     console.log(userData);
     const profileContainer = createEl('div',{id:'profile-container'});
 
-    const discriminator = userData.Discriminator;
-    const profileTitle = createEl('p', { id: 'profile-title', textContent: getUserNick(userData.UserId) });
+    const discriminator = userData.discriminator;
+    const userId = userData.userId;
+    const isOnline = userData.isOnline;
+    const description = userData.description;
+
+    const profileTitle = createEl('p', { id: 'profile-title', textContent: getUserNick(userId) });
     const profileDiscriminator = createEl('p', { id: 'profile-discriminator', textContent:'#' + discriminator });
     profileContainer.appendChild(profileTitle);
     profileContainer.appendChild(profileDiscriminator);
-    const aboutTitle = createEl('p', { id: 'profile-about-title', textContent: userData.UserId == currentUserId ? 'Hakkımda' : 'Hakkında'});
-    const aboutDescription = createEl('p', { id: 'profile-about-description', textContent: userData.Description });
+    const aboutTitle = createEl('p', { id: 'profile-about-title', textContent: userId == currentUserId ? 'Hakkımda' : 'Hakkında'});
+    const aboutDescription = createEl('p', { id: 'profile-about-description', textContent: description });
     const popBottomContainer = createEl('div', { className: 'popup-bottom-container', id: 'profile-popup-bottom-container' });
     popBottomContainer.appendChild(aboutTitle);
     popBottomContainer.appendChild(aboutDescription);
     const popTopContainer = createEl('div', { className: 'popup-bottom-container', id: 'profile-popup-top-container' });
-    const profileOptions = createEl('button',{id:userData.UserId, className:'profile-dots3'});
+    const profileOptions = createEl('button',{id:userId, className:'profile-dots3'});
     const profileOptionsText = createEl('p',{className:'profile-dots3-text',textContent:'⋯'});
     profileOptions.appendChild(profileOptionsText);
     popTopContainer.appendChild(profileOptions);
@@ -159,8 +163,8 @@ function drawProfilePop(userData) {
 
     const profileOptionsContainer = createEl('div',{className: 'profile-options-container'});
 
-    if(userData.UserId != currentUserId) {
-        if(!isFriend(userData.UserId)) {
+    if(userId != currentUserId) {
+        if(!friendCache.isFriend(userId)) {
             const addFriendBtn = createEl('button', { className: 'profile-add-friend-button' });
             addFriendBtn.innerHTML = ` <div class="icon-container">${createAddFriSVG()}</div> Arkadaş Ekle`;
             function createAddFriSVG() {
@@ -171,7 +175,7 @@ function drawProfilePop(userData) {
                     </svg>
                 `;
             }
-            addFriendBtn.addEventListener('click', () => { addFriend(userData.UserId); });
+            addFriendBtn.addEventListener('click', () => { addFriend(userId); });
             profileOptionsContainer.appendChild(addFriendBtn);
     
         } 
@@ -184,7 +188,7 @@ function drawProfilePop(userData) {
     
         sendMsgBtn.addEventListener('click', () => {
             loadMainMenu();
-            OpenDm(userData.UserId);
+            openDm(userId);
             const profilePopContainer = getId('profilePopContainer');
             if(profilePopContainer) {
                 profilePopContainer.parentNode.remove();
@@ -198,14 +202,14 @@ function drawProfilePop(userData) {
     
     
     profileContainer.appendChild(profileOptionsContainer);
-    setProfilePic(profileImg,userData.UserId);
+    setProfilePic(profileImg,userId);
 
-    const bubble = createBubble(userData.is_online,true);
+    const bubble = createBubble(isOnline,true);
     profileImg.appendChild(bubble);
 
-    appendToProfileContextList(userData,userData.UserId);
+    appendToProfileContextList(userData,userId);
     profileOptions.addEventListener('click',function(event) { 
-        showContextMenu(event.pageX, event.pageY,contextList[userData.UserId]);
+        showContextMenu(event.pageX, event.pageY,contextList[userId]);
     });
     profileImg.onload = function() {
         popTopContainer.style.backgroundColor = getAverageRGB(profileImg);

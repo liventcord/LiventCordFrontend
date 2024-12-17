@@ -521,13 +521,13 @@ function closeCurrentCall() {
     usersInVoice[oldVoiceId] = [];
 
     const data = {
-        'guild_id' : currentVoiceChannelGuild,
-        'channel_id' : currentVoiceChannelId
+        'guildId' : currentVoiceChannelGuild,
+        'channelId' : currentVoiceChannelId
     }
     socket.emit('leave_voice_channel',data)
 }
-function clearVoiceChannel(channel_id) {
-    const channelButton = channelsUl.querySelector(`li[id="${channel_id}"]`);
+function clearVoiceChannel(channelId) {
+    const channelButton = channelsUl.querySelector(`li[id="${channelId}"]`);
     if(!channelButton) {return; }
     const buttons = channelButton.querySelectorAll('.channel-button');
     buttons.forEach((btn,index) => {
